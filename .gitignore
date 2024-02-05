@@ -4,3 +4,14 @@
 RK-RELEASE-NOTES-V1.4.1.txt
 IMAGE/
 output/
+
+.idea/
+cover.out
+coverage.html
+test.out
+*.log
+*.un~
+*.swp
+*.o
+cprj/
+*.gz

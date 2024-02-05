@@ -61,6 +61,9 @@ export RK_PARTITION_FS_TYPE_CFG=rootfs@IGNORE@ubifs,oem@/oem@ubifs,userdata@/use
 # Target rootfs : ubuntu(only emmc)/buildroot/busybox
 export LF_TARGET_ROOTFS=buildroot
 
+# SUBMODULES : github/gitee
+export LF_SUBMODULES_BY=gitee
+
 # Buildroot defconfig
 export RK_BUILDROOT_DEFCONFIG=luckfox_pico_defconfig
 
