@@ -112,7 +112,7 @@ else
 endif
 
 ifneq ($(findstring $(TARGET_ROOTFS),custom),)
-   ROOTFS_BUILD_ENV := 
+   ROOTFS_BUILD_ENV :=
 else ifneq ($(findstring $(TARGET_ROOTFS),ubuntu),)
    ROOTFS_BUILD_ENV := ubuntu
 else ifneq ($(findstring $(TARGET_ROOTFS),buildroot),)
@@ -493,7 +493,7 @@ else
 		$(BUSYBOX_DIR)/$(BUSYBOX_VER)/_install)
 endif
 else
-	
+
 	cp -af $(BUSYBOX_DIR)/$(BUSYBOX_VER)/_install/* $(SYSDRV_DIR_OUT_ROOTFS)
 	# luckfox
 	cp $(SYSDRV_DIR)/tools/board/android-tools/S90usb0config $(SYSDRV_DIR_OUT_ROOTFS)/etc/init.d
@@ -510,25 +510,24 @@ busybox_clean:
 #	date:2023-11-11
 ##########################################################################################
 buildroot_menuconfig:
-	$(MAKE) menuconfig -C $(BUILDROOT_DIR)/$(BUILDROOT_VER) 
-	$(MAKE) source -C $(BUILDROOT_DIR)/$(BUILDROOT_VER) 
-	
+	$(MAKE) menuconfig -C $(BUILDROOT_DIR)/$(BUILDROOT_VER)
+	$(MAKE) source -C $(BUILDROOT_DIR)/$(BUILDROOT_VER)
+
 buildroot_savedefconfig:
-	$(MAKE) savedefconfig -C $(BUILDROOT_DIR)/$(BUILDROOT_VER) 
-    
-buildroot: prepare
-	@echo -e "$(C_GREEN) ==sysdrv== build buildroot   $(C_NORMAL)" 
-	test -f $(BUILDROOT_DIR)/$(BUILDROOT_VER)/output/target/bin/busybox  || (\
-		rm $(BUILDROOT_DIR)/$(BUILDROOT_VER) -rf ;\
-		mkdir -p $(BUILDROOT_DIR) ;\
-		tar xzf $(SYSDRV_DIR)/tools/board/buildroot/$(BUILDROOT_VER).tar.gz -C $(BUILDROOT_DIR) ;\
+	$(MAKE) savedefconfig -C $(BUILDROOT_DIR)/$(BUILDROOT_VER)
+
+buildroot: #prepare
+	@echo -e "$(C_GREEN) ==sysdrv== build buildroot   $(C_NORMAL)"
+	test -d $(BUILDROOT_DIR)/$(BUILDROOT_VER)  || ( \
+		mkdir -p $(BUILDROOT_DIR) ; \
+		tar xzf $(SYSDRV_DIR)/tools/board/buildroot/$(BUILDROOT_VER).tar.gz -C $(BUILDROOT_DIR) ; \
 		cp $(SYSDRV_DIR)/tools/board/buildroot/luckfox_pico_defconfig $(BUILDROOT_DIR)/$(BUILDROOT_VER)/configs/ ;\
 		cp $(SYSDRV_DIR)/tools/board/buildroot/busybox.config $(BUILDROOT_DIR)/$(BUILDROOT_VER)/package/busybox/ ;\
 	);
 
-	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) $(BUILDROOT_DEFCONFIG) -C $(BUILDROOT_DIR)/$(BUILDROOT_VER) 
-	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) source -C $(BUILDROOT_DIR)/$(BUILDROOT_VER) 
-	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -j$(SYSDRV_JOBS) -C $(BUILDROOT_DIR)/$(BUILDROOT_VER) 
+	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) $(BUILDROOT_DEFCONFIG) -C $(BUILDROOT_DIR)/$(BUILDROOT_VER)
+	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) source -C $(BUILDROOT_DIR)/$(BUILDROOT_VER)
+	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -j$(SYSDRV_JOBS) -C $(BUILDROOT_DIR)/$(BUILDROOT_VER)
 
 ifeq ($(SYSDRV_BUILD_RAMDISK_FLAG),YES)
     tar xf $(SYSDRV_DIR)/tools/board/rootfs_script.tar -C $(BUILDROOT_DIR)/$(BUILDROOT_VER)/output/target
@@ -550,11 +549,11 @@ else
 	cp $(SYSDRV_DIR)/tools/board/buildroot/S50sshd $(SYSDRV_DIR_OUT_ROOTFS)/etc/init.d/
 	cp $(SYSDRV_DIR)/tools/board/buildroot/S99python $(SYSDRV_DIR_OUT_ROOTFS)/etc/init.d/
 	cp $(SYSDRV_DIR)/tools/board/android-tools/S90usb0config $(SYSDRV_DIR_OUT_ROOTFS)/etc/init.d/
-	
+
 endif
 
 buildroot_clean:
-	$(AT)rm -rf $(BUILDROOT_DIR)/$(BUILDROOT_VER) 
+	$(AT)rm -rf $(BUILDROOT_DIR)/$(BUILDROOT_VER)
 
 ##########################################################################################
 #   build ubuntu
@@ -562,7 +561,7 @@ buildroot_clean:
 #	date:2023-11-28
 ##########################################################################################
 ubuntu: prepare
-	@echo -e "$(C_GREEN) ==sysdrv== build ubuntu   $(C_NORMAL)" 
+	@echo -e "$(C_GREEN) ==sysdrv== build ubuntu   $(C_NORMAL)"
 	echo "====$(LF_TARGET_ROOTFS)===="
 	test -f $(SYSDRV_DIR)/tools/board/ubuntu/$(UBUNTU_VER).tar.gz || (\
 		pushd  $(SYSDRV_DIR)/tools/board/ubuntu/ ;\
